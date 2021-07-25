@@ -1,1 +1,1 @@
-web: gunicorn manage.py:brainskill_123
+web: gunicorn manage:brainskill_123
