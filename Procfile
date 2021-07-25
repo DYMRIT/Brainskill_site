@@ -1,1 +1,1 @@
-web: gunicorn brainskill_123.wsgi --log-file -
+web: gunicorn manage.py:brainskill_123
