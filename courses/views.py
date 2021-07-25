@@ -23,6 +23,7 @@ def about(request):
     return render(request, 'about.html')
 
 
+@login_required
 def help_us(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
