@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Help{% endblock %}
+
+
+{% block content %}
+    <div class="col-md-3 mx-auto" style="margin-bottom: 10%">
+            <h1>Помоги нам</h1>
+                <p>
+                    Здесь вы можете оставить свои идеи по поводу реализации сайта,<br>
+                    реализации группы в вк, оформлению домашнего задания и т.д.
+                </p>
+            <form action="" method="post"> {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </div>
+{% endblock %}
