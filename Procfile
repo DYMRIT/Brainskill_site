@@ -1,0 +1,1 @@
+web: gunicorn brainskill_123.wsgi --log-file -

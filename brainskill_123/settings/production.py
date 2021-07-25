@@ -1,8 +1,16 @@
 import os
 from pathlib import Path
 
+
+DB_NAME = os.environ.get('DB_NAME')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = os.environ.get('DB_HOST')
+DB_USER = os.environ.get('DB_USER')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -12,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%qq+6@ri#%nvf@gdwh3p!c+qvhh@(ge1u%3j4)kb)dan#yj@*9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -33,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -68,10 +77,17 @@ WSGI_APPLICATION = 'brainskill_123.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': '5432'
     }
 }
+import dj_database_url
+db = dj_database_url.config()
+DATABASES['default'].update(db)
 
 
 # Password validation
@@ -124,36 +140,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-DATETIME_INPUT_FORMATS = (
-    '%d %B %Y - %H:%M:%S.%f',  # '05 March 2014 - 08:07:59.0001'
-    '%d %B %Y - %H:%M:%S',     # '05 March 2014 - 08:07:59'
-    '%d %B %Y - %H:%M',        # '05 March 2014 - 08:07'
-    '%d %B %Y',                # '05 March 2014' <- this line was first before
-
-    '%d/%m/%Y %H:%M:%S.%f',    # '25/10/05 14:30:59.000200'
-    '%d/%m/%Y %H:%M:%S',       # '25/10/05 14:30:59'
-    '%d/%m/%Y %H:%M',          # '25/10/05 14:30'
-    '%d/%m/%Y',                # '25/10/05'
-
-    '%d-%m-%Y %H:%M:%S.%f',    # '25-10-05 14:30:59.000200'
-    '%d-%m-%Y %H:%M:%S',       # '25-10-05 14:30:59'
-    '%d-%m-%Y %H:%M',          # '25-10-05 14:30'
-    '%d-%m-%Y',                # '25-10-05'
-
-    '%Y-%m-%d %H:%M:%S.%f',    # '2006-10-25 14:30:59.000200'
-    '%Y-%m-%d %H:%M:%S',       # '2006-10-25 14:30:59'
-    '%Y-%m-%d %H:%M',          # '2006-10-25 14:30'
-    '%Y-%m-%d',                # '2006-10-25'
-
-    '%m/%d/%Y %H:%M:%S.%f',    # '10/25/2006 14:30:59.000200'
-    '%m/%d/%Y %H:%M:%S',       # '10/25/2006 14:30:59'
-    '%m/%d/%Y %H:%M',          # '10/25/2006 14:30'
-    '%m/%d/%Y',                # '10/25/2006'
-
-    '%m/%d/%y %H:%M:%S.%f',    # '10/25/06 14:30:59.000200'
-    '%m/%d/%y %H:%M:%S',       # '10/25/06 14:30:59'
-    '%m/%d/%y %H:%M',          # '10/25/06 14:30'
-    '%m/%d/%y',                # '10/25/06'
-)
